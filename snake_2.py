@@ -1,3 +1,5 @@
+"""Version 2 - setting the screen dimensions and colour"""
+
 import pygame
 import time
 pygame.init()

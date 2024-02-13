@@ -1,4 +1,4 @@
-"""Version 4 - quitting the game when bumps into edge"""
+"""Version 5 - displaying messages in the game"""
 
 import pygame
 import time
@@ -20,6 +20,16 @@ yellow = (255, 255, 153)
 # Fonts for the game
 score_font = pygame.font.SysFont("calibri", 20)
 exit_font = pygame.font.SysFont("impact", 30)
+msg_font = pygame.font.SysFont("impact", 50)
+
+
+def message(msg, txt_colour, bkgd_colour):
+    txt = msg_font.render(msg, True, txt_colour, bkgd_colour)
+
+    # Centre rectangle: 1000/2 = 500 and 720/2 = 360
+    text_box = txt.get_rect(center=(500, 360))
+    screen.blit(txt, text_box)
+
 
 clock = pygame.time.Clock()  # Sets the speed at which the snake moves
 
@@ -34,10 +44,12 @@ snake_x_change = 0  # Holds the value of changes in the x-coordinate
 snake_y_change = 0  # Holds the value of changes in the y-coordinate
 
 while not quit_game:
+    # If snake runs into wall, game ends
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quit_game = True
 
+        # Directions to make snake move
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 snake_x_change = -20
@@ -69,6 +81,11 @@ while not quit_game:
 
     clock.tick(5)  # Sets the speed at which each iteration of the game loop
     # Runs in frames per second (fps). IN this case it is set to 5fps
+
+# Display dead message when snake dies and quit
+message("You died!", white, purple)
+pygame.display.update()
+time.sleep(3)
 
 pygame.quit
 quit()

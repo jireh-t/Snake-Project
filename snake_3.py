@@ -1,3 +1,5 @@
+"""Version 3 setting up movements of the snake"""
+
 import pygame
 import time
 pygame.init()
