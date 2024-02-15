@@ -1,4 +1,4 @@
-"""Version 5 - displaying messages in the game"""
+"""Version 6 - displaying the fruit and eating it"""
 
 import pygame
 import time
