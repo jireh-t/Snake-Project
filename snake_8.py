@@ -1,4 +1,4 @@
-"""Version 8 - allow the user to click 'X' to quit"""
+"""Version 8 - allow the user to click 'X' to quit, restart, or resume"""
 
 import pygame
 import time
@@ -99,13 +99,18 @@ def game_loop():
                                 end = True, game_loop()
 
                         # If user presses the space-bar, game continues
+                            if event.key == pygame.K_SPACE:
+                                end = True
 
-                        
+                        # If user presses 'Q' game quits
+                            if event.key == pygame.K_q:
+                                quit_game = True
+                                end = True
 
-        # If snake runs into wall, game ends
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit_game = True
+        # # If snake runs into wall, game ends
+        # for event in pygame.event.get():
+        #     if event.type == pygame.QUIT:
+        #         quit_game = True
 
             # Directions to make snake move
             if event.type == pygame.KEYDOWN:
@@ -131,7 +136,8 @@ def game_loop():
         snake_x += snake_x_change
         snake_y += snake_y_change
 
-        screen.fill(yellow)  # Changes screen (surface) from default black to green
+        screen.fill(yellow)  # Changes screen (surface) from default black
+        # to yellow
 
         # Create rectangle for snake
         pygame.draw.rect(screen, purple, [snake_x, snake_y, 20, 20])
@@ -150,9 +156,9 @@ def game_loop():
         clock.tick(5)  # Sets the speed at which each iteration of the game loop
         # Runs in frames per second (fps). IN this case it is set to 5fps
 
-
-    pygame.quit
+    pygame.quit()
     quit()
+
 
 # Main Routine
 game_loop()

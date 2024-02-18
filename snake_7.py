@@ -102,7 +102,8 @@ def game_loop():
         snake_x += snake_x_change
         snake_y += snake_y_change
 
-        screen.fill(yellow)  # Changes screen (surface) from default black to green
+        screen.fill(yellow)  # Changes screen (surface) from default black
+        # to yellow
 
         # Create rectangle for snake
         pygame.draw.rect(screen, purple, [snake_x, snake_y, 20, 20])
@@ -122,8 +123,9 @@ def game_loop():
         # Runs in frames per second (fps). IN this case it is set to 5fps
 
 
-    pygame.quit
+    pygame.quit()
     quit()
+
 
 # Main Routine
 game_loop()
