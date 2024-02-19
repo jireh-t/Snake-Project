@@ -1,4 +1,4 @@
-"""Version 9 - making the snake grow when it eats a fruit"""
+"""Version 10 - making a sprite for the fruit"""
 
 import pygame
 import time
@@ -49,9 +49,9 @@ def game_loop():
     quit_game = False
     game_over = False
 
-    # Snake will be 20 x 20 pixels
-    snake_x = 490  # Centre point horizontally is (1000-20 snake width)/2 = 490
-    snake_y = 350  # Centre point vertically is (720-20 snake height)/2 = 350
+    # Snake will be 20 x 20 pixels - coordinates set to work for a 20px grid
+    snake_x = 480  # Centre point horizontally is (1000-20 snake width)/2 = 490
+    snake_y = 340  # Centre point vertically is (720-20 snake height)/2 = 350
 
     snake_x_change = 0  # Holds the value of changes in the x-coordinate
     snake_y_change = 0  # Holds the value of changes in the y-coordinate
@@ -158,10 +158,12 @@ def game_loop():
 
         draw_snake(snake_list)
 
-        pygame.display.update()
+        # Using a sprite (instead of the previous circle) to represent food
+        food = pygame.Rect(food_x, food_y, 20, 20)
+        apple = pygame.image.load('apple_2.png').convert_alpha()
+        resized_apple = pygame.transform.smoothscale(apple, [20, 20])
+        screen.blit(resized_apple, food)
 
-        # Create circle for food
-        pygame.draw.circle(screen, red, [food_x, food_y], 10)
         pygame.display.update()
 
         # Collision detection (test if snake touches food)
@@ -172,13 +174,13 @@ def game_loop():
         print(f"Food y: {food_y}")
         print("\n\n")
 
-        # NOTE: Radius is subtracted from food coordinates, otherwise it
-        # detects the edge of the snake and the centre of the food (circle)
-        # as the collision point
-        if snake_x == food_x - 10 and snake_y == food_y - 10:
+        # Detecting snake contact with food sprite (instead of circle)
+        if snake_x == food_x and snake_y == food_y:
             # Set new random position for food if snake touches it
             food_x = round(random.randrange(20, 1000 - 20) / 20) * 20
             food_y = round(random.randrange(20, 720 - 20) / 20) * 20
+            # For testing purposes
+            print("Got it!")
 
             # Increase length of snake (by original size)
             snake_length += 1
