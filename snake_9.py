@@ -1,4 +1,4 @@
-"""Version 8 - allow the user options to quit, restart, or resume"""
+"""Version 9 - making the snake grow when it eats a fruit"""
 
 import pygame
 import time
@@ -34,6 +34,14 @@ def message(msg, txt_colour, bkgd_colour):
     screen.blit(txt, text_box)
 
 
+# Create snake - replaces the previous snake drawing section in main loop
+def draw_snake(snake_list):
+    print(f"Snake list: {snake_list}")  # for testing purposes
+    for i in snake_list:
+        # x and y coordinates of snake section, and dimensions
+        pygame.draw.rect(screen, purple, [i[0], i[1], 20, 20])
+
+
 # Function to run the main game loop
 def game_loop():
 
@@ -47,6 +55,8 @@ def game_loop():
 
     snake_x_change = 0  # Holds the value of changes in the x-coordinate
     snake_y_change = 0  # Holds the value of changes in the y-coordinate
+    snake_list = []
+    snake_length = 1
 
     # Setting a random position for the food - to start
     food_x = round(random.randrange(20, 1000 - 20) / 20) * 20
@@ -134,8 +144,18 @@ def game_loop():
         screen.fill(yellow)  # Changes screen (surface) from default black
         # to yellow
 
-        # Create rectangle for snake
-        pygame.draw.rect(screen, purple, [snake_x, snake_y, 20, 20])
+        # Create snake (replaces simple rectangle in previous section)
+        snake_head = [snake_x, snake_y]
+        snake_list.append(snake_head)  # Nest snake head in snake list
+
+        if len(snake_list) > snake_length:
+            del snake_list[0]
+
+        # Detect if snake head touches any other part of the snake
+        for x in snake_list[:-1]:  # Counting from the end of the snake list
+            if x == snake_head:
+                game_over = True
+
         pygame.display.update()
 
         # Create circle for food
