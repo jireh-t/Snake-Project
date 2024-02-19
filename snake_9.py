@@ -156,6 +156,8 @@ def game_loop():
             if x == snake_head:
                 game_over = True
 
+        draw_snake(snake_list)
+
         pygame.display.update()
 
         # Create circle for food
@@ -168,8 +170,12 @@ def game_loop():
             food_x = round(random.randrange(20, 1000 - 20) / 20) * 20
             food_y = round(random.randrange(20, 720 - 20) / 20) * 20
 
-        clock.tick(5)  # Sets the speed at which each iteration of the game loop
+            # Increase length of snake (by original size)
+            snake_length += 1
+
+        # Sets the speed at which each iteration of the game loop
         # Runs in frames per second (fps). IN this case it is set to 5fps
+        clock.tick(5)
 
     pygame.quit()
     quit()
