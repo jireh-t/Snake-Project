@@ -1,5 +1,5 @@
-"""Version 12 - changing the snake speed to make it more challenging as the
-game goes on, using snake length"""
+"""Version 12 trial 2 - trialling a different way to calculate player's
+score using time since game has started"""
 
 import pygame
 import time
@@ -52,6 +52,7 @@ def draw_snake(snake_list):
 # Function to run the main game loop
 def game_loop():
 
+    start_time = time.time()  # To record score (time) from start of game
     # Loop to keep screen open until user presses 'X'
     quit_game = False
     game_over = False
@@ -165,15 +166,9 @@ def game_loop():
 
         draw_snake(snake_list)
 
-        # Keeping track of the player's score
-        score = snake_length - 1  # Score excludes snake's head
+        # Player's score calculation - based on game time elapsed
+        score = round(time.time() - start_time)
         player_score(score, black)
-
-        # Link speed of snake to player score to increase difficulty
-        if score > 3:
-            speed = score
-        else:
-            speed = 3
 
         # Using a sprite (instead of the previous circle) to represent food
         food = pygame.Rect(food_x, food_y, 20, 20)
@@ -204,7 +199,7 @@ def game_loop():
 
         # Sets the speed at which each iteration of the game loop
         # Runs in frames per second (fps). IN this case it is set to 5fps
-        clock.tick(speed)
+        clock.tick(5)
 
     pygame.quit()
     quit()
